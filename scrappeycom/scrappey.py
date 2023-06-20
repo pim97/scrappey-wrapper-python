@@ -1,4 +1,5 @@
 import requests
+import urllib.parse
 
 class Scrappey:
     def __init__(self, api_key):
@@ -47,7 +48,7 @@ class Scrappey:
 
         if not is_form_data:
             try:
-                request_data = requests.utils.quote(post_data)
+                request_data = urllib.parse.urlencode(post_data)
             except ValueError:
                 raise ValueError('Invalid postData format. It must be in application/x-www-form-urlencoded format.')
         else:
