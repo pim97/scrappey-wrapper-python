@@ -18,7 +18,7 @@ Website: https://scrappey.com/
 Use pip to install the Scrappey library. 💻
 
 ```shell
-pip install scrappey
+pip install scrappeycom
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ pip install scrappey
 Import the Scrappey library in your code. 📦
 
 ```python
-import scrappey
+from scrappeycom.scrappey import Scrappey
 ```
 
 Create an instance of Scrappey by providing your Scrappey API key. 🔑
