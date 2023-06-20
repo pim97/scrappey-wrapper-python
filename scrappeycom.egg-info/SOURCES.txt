@@ -1,0 +1,11 @@
+LICENSE.txt
+README.md
+setup.cfg
+setup.py
+scrappeycom/scrappey.py
+scrappeycom/test.py
+scrappeycom.egg-info/PKG-INFO
+scrappeycom.egg-info/SOURCES.txt
+scrappeycom.egg-info/dependency_links.txt
+scrappeycom.egg-info/requires.txt
+scrappeycom.egg-info/top_level.txt

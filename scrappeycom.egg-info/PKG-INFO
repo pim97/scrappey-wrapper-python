@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: scrappeycom
+Version: 0.2
+Summary: An API wrapper for Scrappey.com written in Python (cloudflare bypass & solver)
+Home-page: https://github.com/pim97/scrappey-wrapper-python
+Download-URL: https://github.com/pim97/scrappey-wrapper-python/archive/refs/tags/v_01.tar.gz
+Author: dormic97
+Author-email: crozz-boy@hotmail.com
+License: MIT
+Keywords: captcha,shape,web-scraping,data-extraction,akamai,captcha-solver,incapsula,queue-it,scraping-framework,datadome,scraping-tool,cloudflare-bypass,web-scraping-solution,scraping-library,cloudflare-anti-bot,scraping-service,web-data-extraction,anti-bot-api,perimetex
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+License-File: LICENSE.txt

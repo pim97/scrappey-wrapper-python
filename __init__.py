@@ -1,0 +1,1 @@
+from scrappeycom.scrappey import Scrappey
