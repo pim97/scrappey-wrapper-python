@@ -41,20 +41,20 @@ scrappey_instance = scrappey.Scrappey(api_key)
 Here's an example of how to use Scrappey. 🚀
 
 ```python
-from scrappey import Scrappey
+from scrappeycom.scrappey import Scrappey
 
-scrappey = Scrappey('YOUR_API_KEY')
+scrappey = Scrappey('API_KEY')
 
 def run_test():
     try:
         session = scrappey.create_session()
         print(session)
 
-        get_request_result = scrappey.get_request('https://reqres.in/api/users', session['session'])
+        get_request_result = scrappey.get_request('https://httpbin.rs/get', session['session'])
         print('GET Request Result:', get_request_result)
 
         post_data = {'username': 'user123', 'password': 'pass456'}
-        post_request_result = scrappey.post_request('https://reqres.in/api/users', post_data, session['session'])
+        post_request_result = scrappey.post_request('https://httpbin.rs/post', post_data, session['session'])
         print('POST Request Result:', post_request_result)
 
         scrappey.destroy_session(session['session'])

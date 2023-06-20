@@ -1,9 +1,9 @@
 Metadata-Version: 2.1
 Name: scrappeycom
-Version: 0.2
+Version: 0.3
 Summary: An API wrapper for Scrappey.com written in Python (cloudflare bypass & solver)
 Home-page: https://github.com/pim97/scrappey-wrapper-python
-Download-URL: https://github.com/pim97/scrappey-wrapper-python/archive/refs/tags/v_01.tar.gz
+Download-URL: https://github.com/pim97/scrappey-wrapper-python/archive/refs/tags/v_02.tar.gz
 Author: dormic97
 Author-email: crozz-boy@hotmail.com
 License: MIT
