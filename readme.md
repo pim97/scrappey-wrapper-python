@@ -122,7 +122,7 @@ Here are some other examples from the builder (https://app.scrappey.com/#/builde
 
 {
   "cmd": "request.post",
-  "url": "https://httpbin.rs/get",
+  "url": "https://httpbin.rs/post",
   "postData": "{\"happy\":\"true}",
   "customHeaders": {
     "content-type": "application/json",
