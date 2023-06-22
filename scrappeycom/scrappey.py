@@ -6,7 +6,7 @@ class Scrappey:
         self.api_key = api_key
         self.base_url = 'https://publisher.scrappey.com/api/v1'
 
-    def send_request(self, endpoint, method, data=None):
+    def send_request(self, endpoint, data=None):
         url = f'{self.base_url}?key={self.api_key}'
 
         headers = {
@@ -19,39 +19,25 @@ class Scrappey:
         }
 
         try:
-            response = requests.request(method, url, headers=headers, json=payload)
+            response = requests.post(url, headers=headers, json=payload)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as error:
             raise error
 
-    def create_session(self, session_id=None, proxy=None):
-        return self.send_request('sessions.create', 'POST', {'session': session_id, 'proxy': proxy})
+    def create_session(self, data):
+        return self.send_request(endpoint='sessions.create', data=data)
 
-    def destroy_session(self, session_id):
-        if session_id is None:
-            raise ValueError('sessionId parameter is required.')
+    def destroy_session(self, session):
+        if session is None:
+            raise ValueError('session parameter is required.')
+        return self.send_request(endpoint='sessions.destroy', data={'session': session})
 
-        return self.send_request('sessions.destroy', 'POST', {'session': session_id})
+    def request(self, data):
+        if data is None:
+            raise ValueError('data parameter is required.')
+        
+        if data['cmd'] is None:
+            raise ValueError('data.cmd parameter is required.')
 
-    def get_request(self, url, session_id=None, cookiejar=None, proxy=None):
-        if url is None:
-            raise ValueError('url parameter is required.')
-
-        if session_id is None and cookiejar is None and proxy is None:
-            raise ValueError('At least one of sessionId, cookiejar, or proxy parameters must be provided.')
-
-        return self.send_request('request.get', 'POST', {'url': url, 'session': session_id, 'cookiejar': cookiejar, 'proxy': proxy})
-
-    def post_request(self, url, post_data, session_id=None, cookiejar=None, proxy=None):
-        is_form_data = isinstance(post_data, str) and '=' in post_data
-
-        if not is_form_data:
-            try:
-                request_data = urllib.parse.urlencode(post_data)
-            except ValueError:
-                raise ValueError('Invalid postData format. It must be in application/x-www-form-urlencoded format.')
-        else:
-            request_data = post_data
-
-        return self.send_request('request.post', 'POST', {'url': url, 'postData': request_data, 'session': session_id, 'cookiejar': cookiejar, 'proxy': proxy})
+        return self.send_request(endpoint=data['cmd'], data=data)
