@@ -41,7 +41,7 @@ scrappey_instance = scrappey.Scrappey(api_key)
 Here's an example of how to use Scrappey. 🚀
 
 ```python
-from scrappey import Scrappey
+from scrappeycom.scrappey import Scrappey
 import uuid
 
 scrappey = Scrappey('API_KEY')

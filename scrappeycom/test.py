@@ -1,4 +1,4 @@
-from scrappey import Scrappey
+from scrappeycom.scrappey import Scrappey
 import uuid
 
 scrappey = Scrappey('API_KEY')
