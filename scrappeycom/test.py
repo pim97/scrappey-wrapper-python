@@ -21,23 +21,20 @@ def run_test():
         #       "url":  "https://httpbin.rs/get"
         #    }
 
-        get_request_result = scrappey.request({
-            "cmd":  "request.get",
+        get_request_result = scrappey.get({
             'session': session['session'],
             'url': 'https://httpbin.rs/get',
         })
         print('GET Request Result:', get_request_result)
 
-        post_request_result = scrappey.request({
-            "cmd": "request.post",
+        post_request_result = scrappey.post({
             "url": "https://httpbin.rs/post",
             "postData": "test=test&test2=test2"
         })
         print('POST Request Result:', post_request_result)
 
         # JSON request example
-        post_request_result_json = scrappey.request({
-            "cmd": "request.post",
+        post_request_result_json = scrappey.post({
             "url": "https://backend.scrappey.com/api/auth/login",
             "postData": "{\"email\":\"email\",\"password\":\"password\"}",
             "customHeaders": {

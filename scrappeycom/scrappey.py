@@ -33,6 +33,18 @@ class Scrappey:
             raise ValueError('session parameter is required.')
         return self.send_request(endpoint='sessions.destroy', data={'session': session})
 
+    def post(self,data):
+        if data is None:
+            raise ValueError('data parameter is required.')
+
+        return self.send_request(endpoint='request.post', data=data)
+
+    def get(self, data):
+        if data is None:
+            raise ValueError('data parameter is required.')
+
+        return self.send_request(endpoint='request.get', data=data)
+
     def request(self, data):
         if data is None:
             raise ValueError('data parameter is required.')

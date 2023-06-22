@@ -64,23 +64,20 @@ def run_test():
         #       "url":  "https://httpbin.rs/get"
         #    }
 
-        get_request_result = scrappey.request({
-            "cmd":  "request.get",
+        get_request_result = scrappey.get({
             'session': session['session'],
             'url': 'https://httpbin.rs/get',
         })
         print('GET Request Result:', get_request_result)
 
-        post_request_result = scrappey.request({
-            "cmd": "request.post",
+        post_request_result = scrappey.post({
             "url": "https://httpbin.rs/post",
             "postData": "test=test&test2=test2"
         })
         print('POST Request Result:', post_request_result)
 
         # JSON request example
-        post_request_result_json = scrappey.request({
-            "cmd": "request.post",
+        post_request_result_json = scrappey.post({
             "url": "https://backend.scrappey.com/api/auth/login",
             "postData": "{\"email\":\"email\",\"password\":\"password\"}",
             "customHeaders": {
@@ -96,9 +93,56 @@ def run_test():
 
 run_test()
 
+
+```
+For more information, please visit the [official Scrappey documentation](https://wiki.scrappey.com/getting-started). 📚
+
+Here are some other examples from the builder (https://app.scrappey.com/#/builder).
+
+```json
+{
+  "cmd": "request.get",
+  "url": "https://httpbin.rs/get",
+  "customHeaders": {
+    "auth": "test"
+  },
+  "cookiejar": [
+    {
+      "key": "cookiekey",
+      "value": "cookievalue",
+      "domain": "httpbin.rs",
+      "path": "/"
+    }
+  ],
+  "session": "86908d12-b225-446c-bb16-dc5c283e1d59",
+  "autoparse": true,
+  "properties": "parse using ai, product name",
+  "proxy": "http://proxystring"
+}
+
+{
+  "cmd": "request.post",
+  "url": "https://httpbin.rs/get",
+  "postData": "{\"happy\":\"true}",
+  "customHeaders": {
+    "content-type": "application/json",
+    "auth": "test"
+  },
+  "cookiejar": [
+    {
+      "key": "cookiekey",
+      "value": "cookievalue",
+      "domain": "httpbin.rs",
+      "path": "/"
+    }
+  ],
+  "session": "86908d12-b225-446c-bb16-dc5c283e1d59",
+  "autoparse": true,
+  "properties": "parse using ai, product name",
+  "proxy": "http://proxystring"
+}
 ```
 
-For more information, please visit the [official Scrappey documentation](https://wiki.scrappey.com/getting-started). 📚
 
 ## License
 
