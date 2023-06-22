@@ -22,14 +22,15 @@ def run_test():
         #    }
 
         get_request_result = scrappey.get({
-            'session': session['session'],
             'url': 'https://httpbin.rs/get',
+            'session': session['session'],
         })
         print('GET Request Result:', get_request_result)
 
         post_request_result = scrappey.post({
             "url": "https://httpbin.rs/post",
-            "postData": "test=test&test2=test2"
+            "postData": "test=test&test2=test2",
+            'session': session['session'],
         })
         print('POST Request Result:', post_request_result)
 
@@ -39,7 +40,8 @@ def run_test():
             "postData": "{\"email\":\"email\",\"password\":\"password\"}",
             "customHeaders": {
                 "content-type": "application/json"
-            }
+            },
+            'session': session['session'],
         })
         print('POST Request Result:', post_request_result_json)
 
