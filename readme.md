@@ -141,6 +141,66 @@ Here are some other examples from the builder (https://app.scrappey.com/#/builde
   "properties": "parse using ai, product name",
   "proxy": "http://proxystring"
 }
+
+{
+    "cmd": "request.get",
+    "url": "https://app.scrappey.com/#/login",
+    "browserActions": [
+        {
+            "type": "type",
+            "text": "testtest@test.nl",
+            "cssSelector": "input[name='login']"
+        },
+        {
+            "type": "type",
+            "text": "amazingpassword",
+            "cssSelector": "input[name='password']"
+        },
+        {
+            "type": "click",
+            "cssSelector": "button[class='inline-flex cursor-pointer justify-center items-center whitespace-nowrap focus:outline-none transition-colors focus:ring duration-150 border rounded ring-blue-700 p-2 bg-blue-500 text-white border-blue-600 hover:bg-blue-600']"
+        },
+        {
+            "type": "goto",
+            "url": "https://app.scrappey.com/#/profilev2"
+        },
+        {
+            "type": "goto",
+            "url": "https://app.scrappey.com/#/builder"
+        }
+        
+    ]
+}
+
+{
+    "cmd": "request.get",
+    "url": "https://discordbotlist.com/bots/dank-memer/upvote",
+    "browserActions": [
+        {
+            "type": "discord_login",
+            "token": "token_here",
+            "when": "beforeload"
+        },
+        {
+            "type": "click",
+            "cssSelector": "a[class='btn btn-blurple']",
+            "wait": 5
+        },
+        {
+            "type": "goto",
+            "url": "https://discordbotlist.com/bots/dank-memer/upvote"
+        },
+        {
+            "type": "click",
+            "cssSelector": "button[class='btn btn-blurple']"
+        },
+        {
+            "type": "click",
+            "cssSelector": "button[class='btn btn-blurple disabled']"
+        }
+    ]
+}
+
 ```
 
 
