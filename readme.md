@@ -4,6 +4,7 @@ Introducing Scrappey, your comprehensive website scraping solution provided by S
 
 **Disclaimer: Please ensure that your web scraping activities comply with the website's terms of service and legal regulations. Scrappey is not responsible for any misuse or unethical use of the library. Use it responsibly and respect the website's policies.** :)
 
+
 Website: https://scrappey.com/
 
 ## Topics
