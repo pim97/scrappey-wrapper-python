@@ -34,7 +34,7 @@ Create an instance of Scrappey by providing your Scrappey API key. 🔑
 
 ```python
 api_key = 'YOUR_API_KEY'
-scrappey_instance = scrappey.Scrappey(api_key)
+scrappey_instance = Scrappey(api_key)
 ```
 
 ### Example
