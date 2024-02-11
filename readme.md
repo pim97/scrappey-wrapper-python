@@ -3,7 +3,7 @@
 Introducing Scrappey, your comprehensive website scraping solution provided by Scrappey.com. With Scrappey's powerful and user-friendly API, you can effortlessly retrieve data from websites, including those protected by Cloudflare without using too much data using caching. Join Scrappey today and revolutionize your data extraction process. 🚀 Check out our https://app.scrappey.com/#/builder to create your first script!       
 
 **Disclaimer: Please ensure that your web scraping activities comply with the website's terms of service and legal regulations. Scrappey is not responsible for any misuse or unethical use of the library. Use it responsibly and respect the website's policies.** :) 
-
+  
 
 Website: https://scrappey.com/
 
