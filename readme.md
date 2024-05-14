@@ -1,4 +1,4 @@
-# 🤖 Scrappey Wrapper - Data Extraction Made Easy           
+# 🤖 Scrappey Wrapper - Data Extraction Made Easy            
  
 Introducing Scrappey, your comprehensive website scraping solution provided by Scrappey.com. With Scrappey's powerful and user-friendly API, you can effortlessly retrieve data from websites, including those protected by Cloudflare/Datadome without using too much data using caching. Join Scrappey today and revolutionize your data extraction process. 🚀 Check out our https://app.scrappey.com/#/builder to create your first script!          
 
