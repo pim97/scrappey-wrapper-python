@@ -39,7 +39,9 @@ scrappey_instance = Scrappey(api_key)
 
 ### Example
 
-Here's an example of how to use Scrappey. 🚀
+Here's an example of how Scrappey works. 🚀 This is an example using our development environment.
+
+![](https://i.gyazo.com/36de841eb39edc9bb60f40c28a854d32.gif)
 
 ```python
 from scrappeycom.scrappey import Scrappey
