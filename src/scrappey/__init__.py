@@ -29,6 +29,17 @@ For async usage:
     asyncio.run(main())
     ```
 
+Drop-in replacement for requests library:
+    ```python
+    # Instead of: import requests
+    from scrappey import requests
+
+    # Use exactly like the requests library
+    response = requests.get("https://example.com")
+    print(response.text)
+    print(response.status_code)
+    ```
+
 Links:
     - Website: https://scrappey.com
     - Documentation: https://wiki.scrappey.com/getting-started
@@ -36,6 +47,7 @@ Links:
     - GitHub: https://github.com/pim97/scrappey-wrapper-python
 """
 
+from . import requests
 from .async_client import AsyncScrappey
 from .client import Scrappey
 from .exceptions import (
@@ -76,12 +88,14 @@ from .types import (
     WhileAction,
 )
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 __all__ = [
     # Main clients
     "Scrappey",
     "AsyncScrappey",
+    # Requests-compatible API
+    "requests",
     # Exceptions
     "ScrappeyError",
     "ScrappeyConnectionError",
