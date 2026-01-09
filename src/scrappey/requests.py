@@ -419,12 +419,17 @@ class Session:
         ```
     """
 
-    def __init__(self, api_key: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        request_type: Optional[str] = None,
+    ) -> None:
         """
         Initialize a Session.
 
         Args:
             api_key: Scrappey API key. If not provided, uses SCRAPPEY_API_KEY env var.
+            request_type: Default request mode - "browser" (default) or "request" (faster, cheaper)
         """
         self._api_key = api_key or os.environ.get("SCRAPPEY_API_KEY", "")
         if not self._api_key:
@@ -435,6 +440,7 @@ class Session:
 
         self._scrappey = Scrappey(api_key=self._api_key)
         self._session_id: Optional[str] = None
+        self._request_type = request_type
 
         # Session-level settings
         self.headers: Dict[str, str] = {}
@@ -486,6 +492,10 @@ class Session:
         # Use session proxies if not overridden
         if "proxies" not in kwargs and self.proxies:
             kwargs["proxies"] = self.proxies
+
+        # Use session request_type if not overridden
+        if "request_type" not in kwargs and self._request_type:
+            kwargs["request_type"] = self._request_type
 
         return kwargs
 
@@ -625,12 +635,16 @@ def _request(
     stream: bool = False,
     verify: bool = True,
     cert: Any = None,
+    request_type: Optional[str] = None,
     scrappey_client: Optional[Scrappey] = None,
     session_id: Optional[str] = None,
     **kwargs: Any,
 ) -> Response:
     """
     Internal request function that maps requests parameters to Scrappey.
+    
+    Args:
+        request_type: Request mode - "browser" (default) or "request" (faster, cheaper)
     """
     # Warn about unsupported parameters
     if files is not None:
@@ -706,6 +720,10 @@ def _request(
         scrappey_options: Dict[str, Any] = {
             "url": full_url,
         }
+
+        # Add request type if specified
+        if request_type:
+            scrappey_options["requestType"] = request_type
 
         # Add session if provided
         if session_id:
@@ -794,13 +812,20 @@ def _request(
 
 
 # Module-level convenience functions
-def get(url: str, params: ParamsType = None, **kwargs: Any) -> Response:
+def get(
+    url: str,
+    params: ParamsType = None,
+    *,
+    request_type: Optional[str] = None,
+    **kwargs: Any,
+) -> Response:
     """
     Send a GET request.
 
     Args:
         url: URL to request
         params: Query parameters
+        request_type: Request mode - "browser" (default) or "request" (faster, cheaper)
         **kwargs: Additional arguments
 
     Returns:
@@ -810,17 +835,22 @@ def get(url: str, params: ParamsType = None, **kwargs: Any) -> Response:
         ```python
         from scrappey import requests
 
-        response = requests.get("https://httpbin.org/get", params={"key": "value"})
-        print(response.json())
+        # Browser mode (default) - better for protected sites
+        response = requests.get("https://httpbin.org/get")
+        
+        # Request mode - faster and cheaper (0.2 balance vs 1 balance)
+        response = requests.get("https://httpbin.org/get", request_type="request")
         ```
     """
-    return _request("GET", url, params=params, **kwargs)
+    return _request("GET", url, params=params, request_type=request_type, **kwargs)
 
 
 def post(
     url: str,
     data: DataType = None,
     json: JsonType = None,
+    *,
+    request_type: Optional[str] = None,
     **kwargs: Any,
 ) -> Response:
     """
@@ -830,6 +860,7 @@ def post(
         url: URL to request
         data: Form data to send
         json: JSON data to send
+        request_type: Request mode - "browser" (default) or "request" (faster, cheaper)
         **kwargs: Additional arguments
 
     Returns:
@@ -842,11 +873,15 @@ def post(
         # Form data
         response = requests.post("https://httpbin.org/post", data={"key": "value"})
 
-        # JSON data
-        response = requests.post("https://httpbin.org/post", json={"key": "value"})
+        # JSON data with request mode (faster)
+        response = requests.post(
+            "https://httpbin.org/post",
+            json={"key": "value"},
+            request_type="request",
+        )
         ```
     """
-    return _request("POST", url, data=data, json=json, **kwargs)
+    return _request("POST", url, data=data, json=json, request_type=request_type, **kwargs)
 
 
 def put(

@@ -314,7 +314,7 @@ class RequestOptions(TypedDict, total=False):
     # Request settings
     referer: str
     postData: Union[str, Dict[str, Any]]
-    requestType: Literal["request"]
+    requestType: Literal["browser", "request"]
     onlyStatusCode: bool
     method: str
     customHeaders: Dict[str, str]

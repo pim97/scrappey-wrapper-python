@@ -5,7 +5,7 @@ This module provides the AsyncScrappey class for async applications.
 For synchronous usage, see client.py.
 """
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import httpx
 
@@ -153,6 +153,7 @@ class AsyncScrappey:
         self,
         url: str,
         *,
+        requestType: Optional[Literal["browser", "request"]] = None,
         session: Optional[str] = None,
         proxy: Optional[str] = None,
         proxyCountry: Optional[str] = None,
@@ -174,6 +175,8 @@ class AsyncScrappey:
         
         Args:
             url: The target URL to scrape
+            requestType: Request mode - "browser" (default, headless browser, 1 balance)
+                        or "request" (HTTP library with TLS, faster, 0.2 balance)
             session: Session ID for cookie/state persistence
             proxy: Custom proxy (format: http://user:pass@ip:port)
             proxyCountry: Request proxy from specific country (e.g., "UnitedStates")
@@ -195,15 +198,20 @@ class AsyncScrappey:
         
         Example:
             ```python
+            # Browser mode (default)
+            result = await scrappey.get(url="https://example.com")
+            
+            # Request mode (faster, cheaper)
             result = await scrappey.get(
                 url="https://example.com",
-                cloudflareBypass=True,
+                requestType="request",
             )
-            html = result["solution"]["response"]
             ```
         """
         data: Dict[str, Any] = {"url": url}
         
+        if requestType is not None:
+            data["requestType"] = requestType
         if session is not None:
             data["session"] = session
         if proxy is not None:
@@ -242,6 +250,7 @@ class AsyncScrappey:
         url: str,
         *,
         postData: Optional[Union[str, Dict[str, Any]]] = None,
+        requestType: Optional[Literal["browser", "request"]] = None,
         session: Optional[str] = None,
         customHeaders: Optional[Dict[str, str]] = None,
         **kwargs: Any,
@@ -252,6 +261,7 @@ class AsyncScrappey:
         Args:
             url: The target URL
             postData: Data to send (string or dict for JSON)
+            requestType: Request mode - "browser" (default) or "request" (faster, cheaper)
             session: Session ID for cookie/state persistence
             customHeaders: Custom HTTP headers
             **kwargs: Additional API options
@@ -263,6 +273,8 @@ class AsyncScrappey:
         
         if postData is not None:
             data["postData"] = postData
+        if requestType is not None:
+            data["requestType"] = requestType
         if session is not None:
             data["session"] = session
         if customHeaders is not None:
@@ -277,6 +289,7 @@ class AsyncScrappey:
         url: str,
         *,
         postData: Optional[Union[str, Dict[str, Any]]] = None,
+        requestType: Optional[Literal["browser", "request"]] = None,
         **kwargs: Any,
     ) -> ScrappeyResponse:
         """
@@ -285,6 +298,7 @@ class AsyncScrappey:
         Args:
             url: The target URL
             postData: Data to send
+            requestType: Request mode - "browser" (default) or "request" (faster, cheaper)
             **kwargs: Additional API options
         
         Returns:
@@ -294,23 +308,34 @@ class AsyncScrappey:
         
         if postData is not None:
             data["postData"] = postData
+        if requestType is not None:
+            data["requestType"] = requestType
         
         data.update(kwargs)
         
         return await self._request("request.put", data)
     
-    async def delete(self, url: str, **kwargs: Any) -> ScrappeyResponse:
+    async def delete(
+        self,
+        url: str,
+        *,
+        requestType: Optional[Literal["browser", "request"]] = None,
+        **kwargs: Any,
+    ) -> ScrappeyResponse:
         """
         Perform a DELETE request to the specified URL.
         
         Args:
             url: The target URL
+            requestType: Request mode - "browser" (default) or "request" (faster, cheaper)
             **kwargs: Additional API options
         
         Returns:
             API response containing the result
         """
         data: Dict[str, Any] = {"url": url}
+        if requestType is not None:
+            data["requestType"] = requestType
         data.update(kwargs)
         
         return await self._request("request.delete", data)
@@ -320,6 +345,7 @@ class AsyncScrappey:
         url: str,
         *,
         postData: Optional[Union[str, Dict[str, Any]]] = None,
+        requestType: Optional[Literal["browser", "request"]] = None,
         **kwargs: Any,
     ) -> ScrappeyResponse:
         """
@@ -328,6 +354,7 @@ class AsyncScrappey:
         Args:
             url: The target URL
             postData: Data to send
+            requestType: Request mode - "browser" (default) or "request" (faster, cheaper)
             **kwargs: Additional API options
         
         Returns:
@@ -337,6 +364,8 @@ class AsyncScrappey:
         
         if postData is not None:
             data["postData"] = postData
+        if requestType is not None:
+            data["requestType"] = requestType
         
         data.update(kwargs)
         

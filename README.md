@@ -50,6 +50,46 @@ with Scrappey(api_key="YOUR_API_KEY") as scrappey:
     print(result["solution"]["statusCode"])
 ```
 
+## Request Types
+
+Scrappey supports two request modes with different trade-offs:
+
+| Mode | Description | Cost | Speed |
+|------|-------------|------|-------|
+| `browser` | Headless browser (default) | 1 balance | Slower, more powerful |
+| `request` | HTTP library with TLS | 0.2 balance | Faster, cheaper |
+
+### Browser Mode (Default)
+
+Uses a real headless browser. Best for:
+- Sites with JavaScript rendering
+- Cloudflare, Datadome, and other antibot protection
+- Browser actions and screenshots
+
+```python
+# Browser mode is the default
+result = scrappey.get(url="https://protected-site.com")
+```
+
+### Request Mode
+
+Uses an HTTP library with TLS fingerprinting. Best for:
+- Simple API calls
+- High-volume scraping
+- When you need speed and low cost
+
+```python
+# Request mode - 5x cheaper and faster
+result = scrappey.get(url="https://api.example.com", requestType="request")
+
+# Works with all HTTP methods
+result = scrappey.post(
+    url="https://api.example.com/data",
+    postData={"key": "value"},
+    requestType="request",
+)
+```
+
 ## Async Usage
 
 ```python
@@ -160,6 +200,7 @@ with requests.Session() as session:
 | `cookies` | Yes | Request cookies |
 | `timeout` | Yes | Request timeout |
 | `proxies` | Yes | Proxy configuration |
+| `request_type` | Yes | "browser" (default) or "request" (faster) |
 | `allow_redirects` | Warn | Handled by browser |
 | `verify` | Warn | SSL handled by service |
 | `stream` | Warn | Not supported |
@@ -316,6 +357,7 @@ Scrappey(
 
 | Option | Type | Description |
 |--------|------|-------------|
+| `requestType` | str | "browser" (default) or "request" (faster, cheaper) |
 | `session` | str | Session ID for state persistence |
 | `proxy` | str | Custom proxy (http://user:pass@ip:port) |
 | `proxyCountry` | str | Proxy country (e.g., "UnitedStates") |

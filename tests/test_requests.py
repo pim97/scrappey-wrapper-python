@@ -510,6 +510,16 @@ class TestSession:
         session.cookies.set("name", "value")
         assert session.cookies.get("name") == "value"
 
+    def test_session_request_type(self):
+        """Session should accept request_type parameter."""
+        session = Session(api_key="test_key", request_type="request")
+        assert session._request_type == "request"
+
+    def test_session_request_type_default(self):
+        """Session should default request_type to None (browser mode)."""
+        session = Session(api_key="test_key")
+        assert session._request_type is None
+
     def test_session_methods_exist(self):
         """Session should have HTTP methods."""
         session = Session(api_key="test_key")
@@ -650,6 +660,37 @@ class TestRequestWithMock:
         
         call_kwargs = mock_client.get.call_args[1]
         assert "key=value" in call_kwargs["url"]
+
+    def test_request_type_browser(self, mock_scrappey):
+        """Should not pass requestType when not specified (defaults to browser)."""
+        MockScrappey, mock_client = mock_scrappey
+        
+        with patch.dict(os.environ, {"SCRAPPEY_API_KEY": "test_key"}):
+            requests.get("https://example.com")
+        
+        call_kwargs = mock_client.get.call_args[1]
+        # requestType should not be set if not specified
+        assert "requestType" not in call_kwargs
+
+    def test_request_type_request(self, mock_scrappey):
+        """Should pass requestType='request' to Scrappey."""
+        MockScrappey, mock_client = mock_scrappey
+        
+        with patch.dict(os.environ, {"SCRAPPEY_API_KEY": "test_key"}):
+            requests.get("https://example.com", request_type="request")
+        
+        call_kwargs = mock_client.get.call_args[1]
+        assert call_kwargs["requestType"] == "request"
+
+    def test_request_type_post(self, mock_scrappey):
+        """Should pass requestType for POST requests."""
+        MockScrappey, mock_client = mock_scrappey
+        
+        with patch.dict(os.environ, {"SCRAPPEY_API_KEY": "test_key"}):
+            requests.post("https://example.com", json={"data": "test"}, request_type="request")
+        
+        call_kwargs = mock_client.post.call_args[1]
+        assert call_kwargs["requestType"] == "request"
 
 
 # =============================================================================
