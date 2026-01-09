@@ -18,11 +18,119 @@ Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping 
 - **Type Hints** - Full type annotations for IDE support and AI assistants
 - **Drop-in Replacement** - Use as a replacement for the `requests` library
 
+## Pricing
+
+Scrappey offers the best value for web scraping with JavaScript rendering and residential proxies:
+
+| Feature | Scrappey | ZenRows | ScrapingBee | Scrapfly |
+|---------|----------|---------|-------------|----------|
+| **Price per 1K Scrapes**<br/>(JS Render + Residential Proxies) | **€1** | $25 | $25 | $187 |
+| **Concurrent Requests**<br/>(Simultaneous scraping) | **200** | 10 | 5 | 5 |
+| **Browser Automation**<br/>(Actions and interactions) | **30+ Actions** | Basic | Basic | Basic |
+| **Billing Model**<br/>(Payment flexibility) | **Pay-as-you-go** | Monthly | Monthly | Monthly |
+| **Success Rate**<br/>(Successful scrapes) | **95%** | 95% | 95% | 95% |
+
+**Why Scrappey?**
+- 🚀 **25x cheaper** than competitors for JS rendering
+- ⚡ **20x more concurrent requests** (200 vs 5-10)
+- 🎯 **30+ browser actions** vs basic automation
+- 💰 **Pay-as-you-go** - no monthly commitments
+- ✅ **Same 95% success rate** as premium services
+
+## How It Works
+
+```mermaid
+graph TB
+    A[Your Application] -->|1. Send Request| B[Scrappey API]
+    B -->|2. Route Request| C{Request Type?}
+    C -->|Browser Mode| D[Headless Browser]
+    C -->|Request Mode| E[HTTP Library + TLS]
+    D -->|3. Execute| F[Browser Actions]
+    E -->|3. Execute| G[HTTP Request]
+    F -->|4. Bypass| H[Cloudflare/Datadome/etc]
+    G -->|4. Bypass| H
+    H -->|5. Solve| I[Captchas if needed]
+    I -->|6. Return| J[HTML/JSON Response]
+    J -->|7. Deliver| A
+    
+    style A fill:#e1f5ff
+    style B fill:#4CAF50,color:#fff
+    style D fill:#2196F3,color:#fff
+    style E fill:#FF9800,color:#fff
+    style H fill:#9C27B0,color:#fff
+    style I fill:#F44336,color:#fff
+    style J fill:#4CAF50,color:#fff
+```
+
+**Request Flow:**
+1. **Your application** sends a request to Scrappey API
+2. **Scrappey routes** to browser or HTTP mode based on `requestType`
+3. **Browser/HTTP engine** executes the request with fingerprinting
+4. **Antibot bypass** automatically handles Cloudflare, Datadome, etc.
+5. **Captcha solving** if needed (reCAPTCHA, hCaptcha, Turnstile)
+6. **Response returned** with HTML, JSON, or extracted data
+7. **Delivered** back to your application
+
 ## Installation
 
 ```bash
 pip install scrappey
 ```
+
+## API Key Setup
+
+You can provide your Scrappey API key in two ways:
+
+### Option 1: Environment Variable (Recommended)
+
+Set the `SCRAPPEY_API_KEY` environment variable:
+
+**Windows (PowerShell):**
+```powershell
+# Temporary (current session only)
+$env:SCRAPPEY_API_KEY = "your_api_key_here"
+
+# Permanent (user-level)
+[System.Environment]::SetEnvironmentVariable('SCRAPPEY_API_KEY', 'your_api_key_here', [System.EnvironmentVariableTarget]::User)
+```
+
+**Windows (Command Prompt):**
+```cmd
+# Temporary (current session only)
+set SCRAPPEY_API_KEY=your_api_key_here
+
+# Permanent (user-level)
+setx SCRAPPEY_API_KEY "your_api_key_here"
+```
+
+**Linux/macOS (Bash/Zsh):**
+```bash
+# Temporary (current session only)
+export SCRAPPEY_API_KEY="your_api_key_here"
+
+# Permanent (add to ~/.bashrc or ~/.zshrc)
+echo 'export SCRAPPEY_API_KEY="your_api_key_here"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+**Linux/macOS (Fish):**
+```fish
+# Temporary (current session only)
+set -x SCRAPPEY_API_KEY "your_api_key_here"
+
+# Permanent (add to ~/.config/fish/config.fish)
+echo 'set -x SCRAPPEY_API_KEY "your_api_key_here"' >> ~/.config/fish/config.fish
+```
+
+### Option 2: Pass Directly in Code
+
+```python
+from scrappey import Scrappey
+
+scrappey = Scrappey(api_key="your_api_key_here")
+```
+
+> **Note**: Get your API key from [https://app.scrappey.com](https://app.scrappey.com)
 
 ## Quick Start
 
@@ -446,12 +554,23 @@ except ScrappeyError as e:
     print(f"API error: {e}")
 ```
 
+## Pricing & Plans
+
+Visit [https://scrappey.com/pricing](https://scrappey.com/pricing) for detailed pricing information and plans.
+
+**Key Benefits:**
+- 💰 **Pay-as-you-go** - Only pay for what you use
+- 🎯 **No monthly commitments** - Cancel anytime
+- 📊 **Transparent pricing** - See costs before you scrape
+- 🚀 **Volume discounts** - Better rates for high-volume users
+
 ## Links
 
 - **Website**: https://scrappey.com
 - **Documentation**: https://wiki.scrappey.com/getting-started
 - **Request Builder**: https://app.scrappey.com/#/builder
 - **API Reference**: https://wiki.scrappey.com/api-reference
+- **Pricing**: https://scrappey.com/pricing
 - **GitHub**: https://github.com/pim97/scrappey-wrapper-python
 
 ## License
