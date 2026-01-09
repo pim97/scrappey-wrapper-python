@@ -1,0 +1,16 @@
+{
+  "name": "scrappey-nodejs-example",
+  "version": "1.0.0",
+  "description": "Scrappey API usage examples for Node.js",
+  "type": "module",
+  "main": "example.js",
+  "scripts": {
+    "start": "node example.js"
+  },
+  "keywords": [
+    "scrappey",
+    "web-scraping",
+    "cloudflare-bypass"
+  ],
+  "license": "MIT"
+}
