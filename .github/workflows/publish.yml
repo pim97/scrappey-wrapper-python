@@ -79,3 +79,7 @@ jobs:
       
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # Uses trusted publishing by default
+          # If that fails, falls back to API token
+          password: ${{ secrets.PYPI_API_TOKEN }}
