@@ -16,6 +16,7 @@ Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping 
 - **Proxy Support** - Built-in proxy rotation with country selection
 - **Async Support** - Both sync and async clients included
 - **Type Hints** - Full type annotations for IDE support and AI assistants
+- **Drop-in Replacement** - Use as a replacement for the `requests` library
 
 ## Installation
 
@@ -66,6 +67,115 @@ async def main():
             print(result["solution"]["statusCode"])
 
 asyncio.run(main())
+```
+
+## Drop-in Replacement for `requests`
+
+Scrappey provides a **drop-in replacement** for the popular `requests` library. Simply change your import and your existing code will work with Scrappey's Cloudflare bypass and antibot capabilities!
+
+### Migration
+
+```python
+# Before (using requests)
+import requests
+
+response = requests.get("https://example.com")
+print(response.text)
+
+# After (using Scrappey) - just change the import!
+from scrappey import requests
+
+response = requests.get("https://example.com")
+print(response.text)
+```
+
+That's it! Your code now uses Scrappey for automatic Cloudflare bypass.
+
+> **Note**: Set the `SCRAPPEY_API_KEY` environment variable with your API key.
+
+### Response Object
+
+The Response object works exactly like `requests.Response`:
+
+```python
+from scrappey import requests
+
+response = requests.get("https://httpbin.org/get")
+
+# All standard attributes
+print(response.status_code)    # 200
+print(response.ok)             # True
+print(response.text)           # Response body as text
+print(response.content)        # Response body as bytes
+print(response.headers)        # Response headers
+print(response.cookies)        # Response cookies
+print(response.url)            # Final URL
+print(response.elapsed)        # Time elapsed
+
+# Methods
+data = response.json()         # Parse JSON
+response.raise_for_status()    # Raise on 4xx/5xx
+```
+
+### Sessions
+
+Sessions maintain cookies and headers across requests:
+
+```python
+from scrappey import requests
+
+session = requests.Session()
+
+try:
+    # Login
+    session.post("https://example.com/login", data={"user": "test"})
+
+    # Subsequent requests include cookies from login
+    response = session.get("https://example.com/dashboard")
+
+    # Session-level headers
+    session.headers.update({"Authorization": "Bearer token"})
+finally:
+    session.close()  # Clean up Scrappey session
+```
+
+Or use as a context manager:
+
+```python
+from scrappey import requests
+
+with requests.Session() as session:
+    session.get("https://example.com")
+    # Session automatically closed when exiting
+```
+
+### Supported Parameters
+
+| Parameter | Supported | Notes |
+|-----------|-----------|-------|
+| `params` | Yes | Query parameters |
+| `data` | Yes | Form data |
+| `json` | Yes | JSON data |
+| `headers` | Yes | Custom headers |
+| `cookies` | Yes | Request cookies |
+| `timeout` | Yes | Request timeout |
+| `proxies` | Yes | Proxy configuration |
+| `allow_redirects` | Warn | Handled by browser |
+| `verify` | Warn | SSL handled by service |
+| `stream` | Warn | Not supported |
+| `files` | Warn | Not supported |
+| `auth` | Warn | Use headers instead |
+
+### Why Use This?
+
+Sites protected by Cloudflare, Datadome, PerimeterX, and other antibots will **just work**:
+
+```python
+from scrappey import requests
+
+# This would fail with regular requests, but works with Scrappey!
+response = requests.get("https://nowsecure.nl/")  # CF-protected
+print(response.status_code)  # 200
 ```
 
 ## Examples
