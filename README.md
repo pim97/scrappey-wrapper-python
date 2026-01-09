@@ -49,7 +49,8 @@ graph TB
     E -->|3. Execute| G[HTTP Request]
     F -->|4. Bypass| H[Cloudflare/Datadome/etc]
     G -->|4. Bypass| H
-    H -->|5. Solve| I[Captchas if needed]
+    H -->|5. Solve Captchas| I[Browser Mode Only]
+    F -->|5. Skip| I
     I -->|6. Return| J[HTML/JSON Response]
     J -->|7. Deliver| A
     
@@ -67,9 +68,11 @@ graph TB
 2. **Scrappey routes** to browser or HTTP mode based on `requestType`
 3. **Browser/HTTP engine** executes the request with fingerprinting
 4. **Antibot bypass** automatically handles Cloudflare, Datadome, etc.
-5. **Captcha solving** if needed (reCAPTCHA, hCaptcha, Turnstile)
+5. **Captcha solving** (browser mode only) - automatically solves reCAPTCHA, hCaptcha, Turnstile
 6. **Response returned** with HTML, JSON, or extracted data
 7. **Delivered** back to your application
+
+> **Note**: Captcha solving is only available in **browser mode**. Request mode does not support captcha solving.
 
 ## Installation
 
@@ -172,6 +175,7 @@ Scrappey supports two request modes with different trade-offs:
 Uses a real headless browser. Best for:
 - Sites with JavaScript rendering
 - Cloudflare, Datadome, and other antibot protection
+- **Automatic captcha solving** (reCAPTCHA, hCaptcha, Turnstile)
 - Browser actions and screenshots
 
 ```python
@@ -185,6 +189,11 @@ Uses an HTTP library with TLS fingerprinting. Best for:
 - Simple API calls
 - High-volume scraping
 - When you need speed and low cost
+
+**Limitations:**
+- ❌ **No captcha solving** - Only browser mode can solve captchas
+- ❌ **No browser actions** - JavaScript execution not available
+- ❌ **No screenshots** - Visual rendering not supported
 
 ```python
 # Request mode - 5x cheaper and faster
@@ -396,11 +405,22 @@ result = scrappey.post(
 
 ### Automatic Captcha Solving
 
+> **Important**: Captcha solving is **only available in browser mode** (default). Request mode does not support captcha solving.
+
 ```python
+# Browser mode (default) - supports captcha solving
 result = scrappey.get(
     url="https://site-with-captcha.com",
-    automaticallySolveCaptchas=True
+    automaticallySolveCaptchas=True,
+    alwaysLoad=["recaptcha", "hcaptcha", "turnstile"],
 )
+
+# Request mode - captcha solving NOT available
+# result = scrappey.get(
+#     url="https://site-with-captcha.com",
+#     requestType="request",
+#     automaticallySolveCaptchas=True,  # This will be ignored
+# )
 ```
 
 ### Screenshot Capture
