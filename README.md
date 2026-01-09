@@ -74,10 +74,7 @@ asyncio.run(main())
 
 ```python
 result = scrappey.get(
-    url="https://protected-site.com",
-    cloudflareBypass=True,
-    premiumProxy=True,
-    proxyCountry="UnitedStates",
+    url="https://protected-site.com"
 )
 
 if result["data"] == "success":
@@ -143,8 +140,7 @@ result = scrappey.post(
 ```python
 result = scrappey.get(
     url="https://site-with-captcha.com",
-    automaticallySolveCaptchas=True,
-    alwaysLoad=["recaptcha", "hcaptcha", "turnstile"],
+    automaticallySolveCaptchas=True
 )
 ```
 
@@ -203,8 +199,6 @@ Scrappey(
 | `request(options)` | Send request with full options dict |
 | `create_session(**options)` | Create a new session |
 | `destroy_session(session)` | Destroy a session |
-| `list_sessions()` | List all active sessions |
-| `is_session_active(session)` | Check if session is active |
 | `browser_action(url, actions, **options)` | Execute browser actions |
 | `screenshot(url, **options)` | Capture screenshot |
 
