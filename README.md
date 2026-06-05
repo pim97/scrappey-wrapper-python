@@ -4,13 +4,10 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping API with automatic Cloudflare bypass, antibot solving, captcha solving, and browser automation.
+Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping API 
 
 ## Features
 
-- **Cloudflare Bypass** - Automatically bypass Cloudflare protection
-- **Antibot Solving** - Handle Datadome, PerimeterX, Kasada, Akamai, and more
-- **Captcha Solving** - Automatic solving for reCAPTCHA, hCaptcha, Turnstile
 - **Browser Automation** - Full browser control with actions like click, type, scroll
 - **Session Management** - Maintain cookies and state across requests
 - **Proxy Support** - Built-in proxy rotation with country selection
@@ -47,8 +44,6 @@ graph TB
     C -->|Request Mode| E[HTTP Library + TLS]
     D -->|3. Execute| F[Browser Actions]
     E -->|3. Execute| G[HTTP Request]
-    F -->|4. Bypass| H[Cloudflare/Datadome/etc]
-    G -->|4. Bypass| H
     H -->|5. Solve Captchas| I[Browser Mode Only]
     F -->|5. Skip| I
     I -->|6. Return| J[HTML/JSON Response]
@@ -67,7 +62,6 @@ graph TB
 1. **Your application** sends a request to Scrappey API
 2. **Scrappey routes** to browser or HTTP mode based on `requestType`
 3. **Browser/HTTP engine** executes the request with fingerprinting
-4. **Antibot bypass** automatically handles Cloudflare, Datadome, etc.
 5. **Captcha solving** (browser mode only) - automatically solves reCAPTCHA, hCaptcha, Turnstile
 6. **Response returned** with HTML, JSON, or extracted data
 7. **Delivered** back to your application
@@ -228,7 +222,7 @@ asyncio.run(main())
 
 ## Drop-in Replacement for `requests`
 
-Scrappey provides a **drop-in replacement** for the popular `requests` library. Simply change your import and your existing code will work with Scrappey's Cloudflare bypass and antibot capabilities!
+Scrappey provides a **drop-in replacement** for the popular `requests` library.
 
 ### Migration
 
@@ -246,7 +240,7 @@ response = requests.get("https://example.com")
 print(response.text)
 ```
 
-That's it! Your code now uses Scrappey for automatic Cloudflare bypass.
+That's it! 
 
 > **Note**: Set the `SCRAPPEY_API_KEY` environment variable with your API key.
 
@@ -338,7 +332,7 @@ print(response.status_code)  # 200
 
 ## Examples
 
-### Cloudflare Bypass
+### Waf Handling
 
 ```python
 result = scrappey.get(
@@ -346,7 +340,7 @@ result = scrappey.get(
 )
 
 if result["data"] == "success":
-    print("Successfully bypassed Cloudflare!")
+    print("Successfully waf!")
     print(result["solution"]["response"])
 ```
 
@@ -491,9 +485,6 @@ Scrappey(
 | `proxyCountry` | str | Proxy country (e.g., "UnitedStates") |
 | `premiumProxy` | bool | Use premium residential proxies |
 | `mobileProxy` | bool | Use mobile carrier proxies |
-| `cloudflareBypass` | bool | Enable Cloudflare bypass |
-| `datadomeBypass` | bool | Enable Datadome bypass |
-| `kasadaBypass` | bool | Enable Kasada bypass |
 | `automaticallySolveCaptchas` | bool | Auto-solve captchas |
 | `browserActions` | list | Browser automation actions |
 | `screenshot` | bool | Capture screenshot |
