@@ -44,7 +44,6 @@ graph TB
     C -->|Request Mode| E[HTTP Library + TLS]
     D -->|3. Execute| F[Browser Actions]
     E -->|3. Execute| G[HTTP Request]
-    H -->|5. Solve Captchas| I[Browser Mode Only]
     F -->|5. Skip| I
     I -->|6. Return| J[HTML/JSON Response]
     J -->|7. Deliver| A
@@ -62,11 +61,8 @@ graph TB
 1. **Your application** sends a request to Scrappey API
 2. **Scrappey routes** to browser or HTTP mode based on `requestType`
 3. **Browser/HTTP engine** executes the request with fingerprinting
-5. **Captcha solving** (browser mode only) - automatically solves reCAPTCHA, hCaptcha, Turnstile
-6. **Response returned** with HTML, JSON, or extracted data
-7. **Delivered** back to your application
-
-> **Note**: Captcha solving is only available in **browser mode**. Request mode does not support captcha solving.
+4. **Response returned** with HTML, JSON, or extracted data
+5. **Delivered** back to your application
 
 ## Installation
 
@@ -169,7 +165,6 @@ Scrappey supports two request modes with different trade-offs:
 Uses a real headless browser. Best for:
 - Sites with JavaScript rendering
 - Cloudflare, Datadome, and other antibot protection
-- **Automatic captcha solving** (reCAPTCHA, hCaptcha, Turnstile)
 - Browser actions and screenshots
 
 ```python
@@ -185,7 +180,6 @@ Uses an HTTP library with TLS fingerprinting. Best for:
 - When you need speed and low cost
 
 **Limitations:**
-- ❌ **No captcha solving** - Only browser mode can solve captchas
 - ❌ **No browser actions** - JavaScript execution not available
 - ❌ **No screenshots** - Visual rendering not supported
 
@@ -397,26 +391,6 @@ result = scrappey.post(
 )
 ```
 
-### Automatic Captcha Solving
-
-> **Important**: Captcha solving is **only available in browser mode** (default). Request mode does not support captcha solving.
-
-```python
-# Browser mode (default) - supports captcha solving
-result = scrappey.get(
-    url="https://site-with-captcha.com",
-    automaticallySolveCaptchas=True,
-    alwaysLoad=["recaptcha", "hcaptcha", "turnstile"],
-)
-
-# Request mode - captcha solving NOT available
-# result = scrappey.get(
-#     url="https://site-with-captcha.com",
-#     requestType="request",
-#     automaticallySolveCaptchas=True,  # This will be ignored
-# )
-```
-
 ### Screenshot Capture
 
 ```python
@@ -485,7 +459,6 @@ Scrappey(
 | `proxyCountry` | str | Proxy country (e.g., "UnitedStates") |
 | `premiumProxy` | bool | Use premium residential proxies |
 | `mobileProxy` | bool | Use mobile carrier proxies |
-| `automaticallySolveCaptchas` | bool | Auto-solve captchas |
 | `browserActions` | list | Browser automation actions |
 | `screenshot` | bool | Capture screenshot |
 | `cssSelector` | str | Extract content by CSS selector |
