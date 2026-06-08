@@ -1,10 +1,10 @@
-# Scrappey - Official Python Wrapper   
+# Scrappey - Official Python Wrapper
 
 [![PyPI version](https://badge.fury.io/py/scrappey.svg)](https://badge.fury.io/py/scrappey)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping API 
+Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping API
 
 ## Features
 
@@ -13,26 +13,25 @@ Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping 
 - **Proxy Support** - Built-in proxy rotation with country selection
 - **Async Support** - Both sync and async clients included
 - **Type Hints** - Full type annotations for IDE support and AI assistants
-- **Drop-in Replacement** - Use as a replacement for the `requests` library
+- **Familiar API** - Modeled after the popular `requests` library
 
 ## Pricing
 
-Scrappey offers the best value for web scraping with JavaScript rendering and residential proxies:
+Scrappey offers strong value for web scraping with JavaScript rendering and residential proxies:
 
-| Feature | Scrappey | ZenRows | ScrapingBee | Scrapfly |
-|---------|----------|---------|-------------|----------|
-| **Price per 1K Scrapes**<br/>(JS Render + Residential Proxies) | **€1** | $25 | $25 | $187 |
-| **Concurrent Requests**<br/>(Simultaneous scraping) | **200** | 10 | 5 | 5 |
-| **Browser Automation**<br/>(Actions and interactions) | **30+ Actions** | Basic | Basic | Basic |
-| **Billing Model**<br/>(Payment flexibility) | **Pay-as-you-go** | Monthly | Monthly | Monthly |
-| **Success Rate**<br/>(Successful scrapes) | **95%** | 95% | 95% | 95% |
+| Feature | Description | Scrappey |
+|---------|-------------|----------|
+| **Price per 1K Scrapes** | JS render + residential proxies | **From €1** |
+| **Concurrent Requests** | Simultaneous scraping | **Up to 200** |
+| **Browser Automation** | Actions and interactions | **30+ Actions** |
+| **Billing Model** | Payment flexibility | **Pay-as-you-go** |
+| **Success Rate** | Successful scrapes | **High** |
 
 **Why Scrappey?**
-- 🚀 **25x cheaper** than competitors for JS rendering
-- ⚡ **20x more concurrent requests** (200 vs 5-10)
-- 🎯 **30+ browser actions** vs basic automation
+- 🚀 **Cost-effective** for JS rendering at scale
+- ⚡ **High concurrency** for large workloads
+- 🎯 **30+ browser actions** for rich automation
 - 💰 **Pay-as-you-go** - no monthly commitments
-- ✅ **Same 95% success rate** as premium services
 
 ## How It Works
 
@@ -44,23 +43,21 @@ graph TB
     C -->|Request Mode| E[HTTP Library + TLS]
     D -->|3. Execute| F[Browser Actions]
     E -->|3. Execute| G[HTTP Request]
-    F -->|5. Skip| I
-    I -->|6. Return| J[HTML/JSON Response]
-    J -->|7. Deliver| A
-    
+    F -->|4. Return| J[HTML/JSON Response]
+    G -->|4. Return| J
+    J -->|5. Deliver| A
+
     style A fill:#e1f5ff
     style B fill:#4CAF50,color:#fff
     style D fill:#2196F3,color:#fff
     style E fill:#FF9800,color:#fff
-    style H fill:#9C27B0,color:#fff
-    style I fill:#F44336,color:#fff
     style J fill:#4CAF50,color:#fff
 ```
 
 **Request Flow:**
-1. **Your application** sends a request to Scrappey API
+1. **Your application** sends a request to the Scrappey API
 2. **Scrappey routes** to browser or HTTP mode based on `requestType`
-3. **Browser/HTTP engine** executes the request with fingerprinting
+3. **Browser/HTTP engine** executes the request
 4. **Response returned** with HTML, JSON, or extracted data
 5. **Delivered** back to your application
 
@@ -79,6 +76,7 @@ You can provide your Scrappey API key in two ways:
 Set the `SCRAPPEY_API_KEY` environment variable:
 
 **Windows (PowerShell):**
+
 ```powershell
 # Temporary (current session only)
 $env:SCRAPPEY_API_KEY = "your_api_key_here"
@@ -88,6 +86,7 @@ $env:SCRAPPEY_API_KEY = "your_api_key_here"
 ```
 
 **Windows (Command Prompt):**
+
 ```cmd
 # Temporary (current session only)
 set SCRAPPEY_API_KEY=your_api_key_here
@@ -97,6 +96,7 @@ setx SCRAPPEY_API_KEY "your_api_key_here"
 ```
 
 **Linux/macOS (Bash/Zsh):**
+
 ```bash
 # Temporary (current session only)
 export SCRAPPEY_API_KEY="your_api_key_here"
@@ -107,6 +107,7 @@ source ~/.bashrc
 ```
 
 **Linux/macOS (Fish):**
+
 ```fish
 # Temporary (current session only)
 set -x SCRAPPEY_API_KEY "your_api_key_here"
@@ -157,19 +158,19 @@ Scrappey supports two request modes with different trade-offs:
 
 | Mode | Description | Cost | Speed |
 |------|-------------|------|-------|
-| `browser` | Headless browser (default) | 1 balance | Slower, more powerful |
+| `browser` | Headless browser (default) | 1 balance | Slower, more capable |
 | `request` | HTTP library with TLS | 0.2 balance | Faster, cheaper |
 
 ### Browser Mode (Default)
 
 Uses a real headless browser. Best for:
 - Sites with JavaScript rendering
-- Cloudflare, Datadome, and other antibot protection
+- Pages that require a full browser environment
 - Browser actions and screenshots
 
 ```python
 # Browser mode is the default
-result = scrappey.get(url="https://protected-site.com")
+result = scrappey.get(url="https://example.com")
 ```
 
 ### Request Mode
@@ -184,7 +185,7 @@ Uses an HTTP library with TLS fingerprinting. Best for:
 - ❌ **No screenshots** - Visual rendering not supported
 
 ```python
-# Request mode - 5x cheaper and faster
+# Request mode - cheaper and faster
 result = scrappey.get(url="https://api.example.com", requestType="request")
 
 # Works with all HTTP methods
@@ -214,9 +215,9 @@ async def main():
 asyncio.run(main())
 ```
 
-## Drop-in Replacement for `requests`
+## Familiar `requests`-style API
 
-Scrappey provides a **drop-in replacement** for the popular `requests` library.
+Scrappey provides an interface modeled after the popular `requests` library.
 
 ### Migration
 
@@ -234,20 +235,20 @@ response = requests.get("https://example.com")
 print(response.text)
 ```
 
-That's it! 
+That's it!
 
 > **Note**: Set the `SCRAPPEY_API_KEY` environment variable with your API key.
 
 ### Response Object
 
-The Response object works exactly like `requests.Response`:
+The Response object works much like `requests.Response`:
 
 ```python
 from scrappey import requests
 
 response = requests.get("https://httpbin.org/get")
 
-# All standard attributes
+# Standard attributes
 print(response.status_code)    # 200
 print(response.ok)             # True
 print(response.text)           # Response body as text
@@ -272,10 +273,10 @@ from scrappey import requests
 session = requests.Session()
 
 try:
-    # Login
+    # Authenticate
     session.post("https://example.com/login", data={"user": "test"})
 
-    # Subsequent requests include cookies from login
+    # Subsequent requests include cookies from the session
     response = session.get("https://example.com/dashboard")
 
     # Session-level headers
@@ -305,55 +306,20 @@ with requests.Session() as session:
 | `cookies` | Yes | Request cookies |
 | `timeout` | Yes | Request timeout |
 | `proxies` | Yes | Proxy configuration |
-| `request_type` | Yes | "browser" (default) or "request" (faster) |
-| `allow_redirects` | Warn | Handled by browser |
-| `verify` | Warn | SSL handled by service |
-| `stream` | Warn | Not supported |
-| `files` | Warn | Not supported |
-| `auth` | Warn | Use headers instead |
-
-### Why Use This?
-
-Sites protected by Cloudflare, Datadome, PerimeterX, and other antibots will **just work**:
-
-```python
-from scrappey import requests
-
-# This would fail with regular requests, but works with Scrappey!
-response = requests.get("https://nowsecure.nl/")  # CF-protected
-print(response.status_code)  # 200
-```
+| `request_type` | Yes | "browser" (default) or "request" (faster) 
 
 ## Examples
 
-### Waf Handling
+### Checking the Result
 
 ```python
 result = scrappey.get(
-    url="https://protected-site.com"
+    url="https://example.com"
 )
 
 if result["data"] == "success":
-    print("Successfully waf!")
+    print("Request completed successfully!")
     print(result["solution"]["response"])
-```
-
-### Session Management
-
-Sessions persist cookies and browser state across requests:
-
-```python
-# Create a session
-session = scrappey.create_session(proxyCountry="UnitedStates")
-session_id = session["session"]
-
-try:
-    # All requests with this session share cookies
-    scrappey.get(url="https://example.com/login", session=session_id)
-    scrappey.get(url="https://example.com/dashboard", session=session_id)
-finally:
-    # Clean up when done
-    scrappey.destroy_session(session_id)
 ```
 
 ### Browser Automation
@@ -563,4 +529,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Disclaimer
 
-Please ensure that your web scraping activities comply with the website's terms of service and legal regulations. Scrappey is not responsible for any misuse or unethical use of the library. Use responsibly and respect website policies.
+Please ensure that your web scraping activities comply with each website's terms of service and applicable laws and regulations. Scrappey is intended for lawful use only, and is not responsible for any misuse. Always obtain proper authorization before scraping, respect `robots.txt` and rate limits, and handle any collected data responsibly.
