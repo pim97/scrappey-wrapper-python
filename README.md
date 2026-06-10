@@ -6,6 +6,8 @@
 
 Official Python wrapper for [Scrappey.com](https://scrappey.com) - Web scraping API
 
+> **Responsible use:** This wrapper is intended for collecting publicly available data in compliance with applicable laws. See the [Disclaimer](#disclaimer).
+
 ## Features
 
 - **Browser Automation** - Full browser control with actions like click, type, scroll
